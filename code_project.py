@@ -12,8 +12,9 @@ st.set_page_config(page_title='Dashboard', page_icon=':bar_chart:', layout='wide
 st.title(':bar_chart: Dashboard sur les ventes')
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)
 
-os.chdir(r'D:/Data science/Streamlit/Mini projet')
-df = pd.read_csv('donnees_ventes_etudiants.csv')
+# Utiliser un chemin relatif
+data_directory = os.path.join(os.getcwd(), 'donnees_ventes_etudiants.csv')
+df = pd.read_csv(data_directory)
 
 col1, col2 = st.columns((2))
 
