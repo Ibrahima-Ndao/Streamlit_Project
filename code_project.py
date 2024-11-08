@@ -140,15 +140,17 @@ df4['longitude'] = df4['State Complet'].map({
 
 
 fig_map = px.scatter_mapbox(df4, lat="latitude", lon="longitude", size="total", color="total",
-                            title="Nombre total de vente par état", mapbox_style="carto-positron", zoom=3)
+                            title="Répartition des vente par état", mapbox_style="carto-positron", zoom=3)
 st.plotly_chart(fig_map, use_container_width=True)
+
+
 
 part1, part2 = st.columns((2))
 
 category_df = df4.groupby(by=['category'], as_index=False)['total'].sum()
 
 with part1:
-    st.subheader('Category wise sales')
+    st.subheader('Répartition des ventes par catégorie')
     fig=px.bar(category_df,
                x='category',
                y='total',
@@ -159,7 +161,7 @@ with part1:
     st.plotly_chart(fig, use_container_width=False, height=200)
 
 with part2:
-    st.subheader('Region wise sales')
+    st.subheader('Répartition des ventes par région')
     fig=px.pie(df4,
                values='total',
                names='Region',
@@ -174,14 +176,13 @@ try:
 except Exception as e:
     st.error(f"An error occurred: {e}")
     df4['month'] = pd.to_datetime(df4['order_date']).dt.to_period('M')
-st.subheader('Time series Analysis')
+st.subheader('Courbe d\'évolution des ventes au fil du temps')
 linechart = pd.DataFrame(df4.groupby(df4['month'].dt.strftime('%Y: %b'))['total'].sum()).reset_index()
 fig2 = px.line(linechart, x='month', y='total', labels={'Total': 'Amount'}, height=500, width=800, template='gridon')
 st.plotly_chart(fig2)
 
 #Treemap
-
-st.subheader('Hierarchical view of sales using TreeMap')
+st.subheader('TreeMap Vue hiérarchique des ventes')
 fig3 = px.treemap(df4, path=['Region', 'category'],
                  color='category')
 fig3.update_layout(width=800, height=650)
@@ -190,7 +191,7 @@ st.plotly_chart(fig3, use_container_width=True)
 
 chart1, chart2 = st.columns((2))
 with chart1:
-    st.subheader('Gender wise sales')
+    st.subheader('Répartition des ventes par genre')
     fig=px.pie(df4,
                values='total',
                names='Gender')
@@ -214,7 +215,7 @@ with st.expander('Summary_Table'):
 x1, x2 = st.columns((2))
 status_df = df4.groupby(by=['status'], as_index=False)['total'].sum()
 with x1:
-    st.subheader('Status wise sales')
+    st.subheader('Répartition des ventes totales par statut')
     fig=px.bar(status_df,
                x='status',
                y='total',
