@@ -140,7 +140,7 @@ df4['longitude'] = df4['State Complet'].map({
 
 
 fig_map = px.scatter_mapbox(df4, lat="latitude", lon="longitude", size="total", color="total",
-                            title="Répartition des vente par état", mapbox_style="carto-positron", zoom=3)
+                            title="Répartition des vente par état", mapbox_style="carto-positron", zoom=3, hover_name="State Complet")
 st.plotly_chart(fig_map, use_container_width=True)
 
 
