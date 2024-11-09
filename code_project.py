@@ -53,38 +53,38 @@ df['State Complet'] = df['State'].map(state_map)
     
 
 
-st.sidebar.header('Choose your filter :')
+st.sidebar.header('Choisi ton filter :')
 
 #create for Region
-region = st.sidebar.multiselect('Pick your region', sorted(df['Region'].unique()))
+region = st.sidebar.multiselect('Région', sorted(df['Region'].unique()))
 if not region:
     df2 = df.copy()
 else:
     df2 = df[df['Region'].isin(region)]
 
 #Create for state
-state = st.sidebar.multiselect('Pick your State', df2["State Complet"].unique())
+state = st.sidebar.multiselect('État', df2["State Complet"].unique())
 if not state:
     df3 = df2.copy()
 else:
     df3 = df2[df2["State Complet"].isin(state)]
     
 #Create for Country
-Country = st.sidebar.multiselect('Pick your Country', df2["Country"].unique())
+Country = st.sidebar.multiselect('pays', df2["Country"].unique())
 if not Country:
     df0 = df3.copy()
 else:
     df0 = df3[df3["Country"].isin(Country)]
     
 #Create for city
-city = st.sidebar.multiselect('Pick your City', sorted(df0['City'].unique()))
+city = st.sidebar.multiselect('ville', sorted(df0['City'].unique()))
 if not city:
     df5 = df0.copy()
 else:
     df5 = df0[df0['City'].isin(city)]
     
 #Create for Status
-status = st.sidebar.multiselect('Pick your Status', sorted(df5['status'].unique()))
+status = st.sidebar.multiselect('Status', sorted(df5['status'].unique()))
 if not status:
     df4 = df5.copy()
 else:
