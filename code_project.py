@@ -215,24 +215,6 @@ with st.expander('Summary_Table'):
 x1, x2 = st.columns((2))
 status_df = df4.groupby(by=['status'], as_index=False)['total'].sum()
 with x1:
-    st.subheader('Répartition des ventes totales par statut')
-    fig=px.bar(status_df,
-               x='status',
-               y='total',
-               text=['${:,.2f}'.format(x) for x in status_df['total']],
-               template='seaborn',
-               labels={'Status': 'Categorie'}
-               )
-    st.plotly_chart(fig, use_container_width=True)
-    
-    
-with x2:
-    top_clients = df4.groupby("full_name")["total"].sum().nlargest(10).reset_index()
-    fig_bar_clients = px.bar(top_clients, x="full_name", y="total", title="TOP 10 des meilleurs clients")
-    st.plotly_chart(fig_bar_clients, use_container_width=True)
-
-sub1, sub2 = st.columns((2))
-with sub1:
     # Créer un graphique de dispersion
     st.subheader('Impact des remises')
     fig4 = px.scatter(df4, 
@@ -247,18 +229,24 @@ with sub1:
     # Afficher le graphique
     st.plotly_chart(fig4, use_container_width=True)
     
-with sub2:
+    
+with x2:
+    top_clients = df4.groupby("full_name")["total"].sum().nlargest(10).reset_index()
+    fig_bar_clients = px.bar(top_clients, x="full_name", y="total", title="TOP 10 des meilleurs clients")
+    st.plotly_chart(fig_bar_clients, use_container_width=True)
+
+
     # Créer un graphique de dispersion
-    st.subheader('Analyse des prix :')
-    fig4 = px.scatter(df4, 
-    x='total', 
-    y='price',
-    size='discount_amount',
-    title='Visualiser la distribution des price et leur impact sur les ventes.',
-    labels={'price': 'prix d\'un article', 'total': 'Ventes Totales'},
-    )  # Ajoute une ligne de tendance
+st.subheader('Analyse des prix :')
+fig4 = px.scatter(df4, 
+x='total', 
+y='price',
+size='discount_amount',
+title='Visualiser la distribution des price et leur impact sur les ventes.',
+labels={'price': 'prix d\'un article', 'total': 'Ventes Totales'},
+)  # Ajoute une ligne de tendance
 
     # Afficher le graphique
-    st.plotly_chart(fig4, use_container_width=True)
+st.plotly_chart(fig4, use_container_width=True)
     
     
